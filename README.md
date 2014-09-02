@@ -1,7 +1,5 @@
 # 白云黄鹤租房版 chrome 插件
 
-===========================
-
 ![](https://github.com/novoland/byhh-house-chrome-extension/raw/master/pic/popup.png)
 
 
