@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2010 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+
+<!--
+@fileoverview Contains script for running at the background to open up the
+options page when the extension is reloaded.
+-->
+
+<html>
+<meta charset="utf-8">
+<script type="text/javascript" src="/javascript/jquery.js"></script>
+<script type="text/javascript" src="/javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="/javascript/template.min.js"></script>
+<script type="text/javascript" src="/javascript/inh_common.js"></script>
+<script type="text/javascript" src="/javascript/bg.js"></script>
+
+  <body>
+  </body>
+
+
+  <script id="notification-content" type="text/html">
+    本次发现 <%=postsInfo.postsFound%> 篇新租房贴，共 <%=postsInfo.postsSum%> 篇未读。
+  </script>  
+</html>

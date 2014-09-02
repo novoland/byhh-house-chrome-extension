@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!--
+ * Copyright (c) 2010 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+
+<!--
+@fileoverview This file serves as the pop-up page for showing news 
+according to the settings saved in options page otherwise shows default
+settings.
+@author navneetg@google.com (Navneet Goel).
+-->
+
+<html>
+<meta charset="utf-8">
+<head>
+<script type="text/javascript" src="/javascript/jquery.js"></script>
+<script type="text/javascript" src="/javascript/bootstrap.min.js"></script>
+<script type="text/javascript" src="/javascript/template.min.js"></script>
+<script type="text/javascript" src="/javascript/moment.min.js"></script>
+<script type="text/javascript" src="/javascript/inh_common.js"></script>
+<script type="text/javascript" src="/javascript/popup.js"></script>
+<link rel = "stylesheet" href = "/css/bootstrap.css"/>
+<style type="text/css">
+  
+body{
+    padding: 5px 9px 0 9px;
+    
+}
+
+*{
+    font-family: "微软雅黑";
+}
+
+.inh-accordion-group{
+    border:none;
+    width: 500px;
+}
+
+.inh-accordion-heading .inh-accordion-title {
+    display: inline-block;
+    color: #208650;
+    text-shadow: 0 1px 0 white;
+    font-weight:bold;
+    padding-left:27px;
+    font-size:12px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.inh-accordion-group{
+    margin-bottom:7px;
+}
+
+.inh-accordion-heading {
+    cursor: pointer;
+    position:relative;
+    border-bottom:solid 1px #eee;
+}
+
+.inh-accordion-title .title-detail{margin-top:0px;font-size: 11px;font-weight: normal;opacity: 0.9;color:#333;}
+.inh-accordion-heading .lastCaptureTime{display: none;margin-left:10px;}
+.inh-accordion-heading:hover .lastCaptureTime{display: inline;}
+
+.inh-accordion-heading i.icon-chevron-right {
+    position:absolute;
+    top:50%;
+    margin-left:3px;
+    margin-right: 5px;
+    opacity:0.6;
+}
+
+.inh-accordion-heading .icon-bar{
+    display: none;
+    position:absolute;
+    top:50%;
+    right:7px;
+    list-style: none;
+    width:150px;
+}
+.inh-accordion-heading:hover .icon-bar{
+    display: block;
+}
+.inh-accordion-heading i.icon-chevron-right,.inh-accordion-heading .icon-bar{
+    margin-top: -7px;
+}
+
+.inh-accordion-heading .icon-bar a{
+    float:right;
+    opacity:0.8;
+    margin-right:6px;
+}
+.inh-accordion-heading .icon-bar a:hover{
+    opacity:1;
+}
+.inh-accordion-inner{
+    border-top:none;
+}
+
+.no-posts-tip{
+    width: 480px;
+    text-align: center;
+    margin-top: 13px;
+    margin-left: 9px;
+    margin-right: 9px;
+}
+</style>
+
+
+
+</head>
+
+<body>
+    
+    
+</body>
+
+<script id="t-list" type="text/html">
+    
+    <%  if(!posts || Object.keys(posts).length == 0) { %>
+        <div class="alert no-posts-tip">
+            暂时没有租房的帖子或您已经看过了所有的租房帖子。
+        </div>
+    <%  } %>
+
+    <%  var i = 0;%>
+    <% $.each(posts,function(k,v){ %>
+        <% i++; %>
+        <div class="accordion-group inh-accordion-group">
+        <div data-toggle="collapse" data-target="#post<%=i%>" onclick="$(this).find('.icon-chevron-right').toggleClass('icon-chevron-down');"
+        class="accordion-heading inh-accordion-heading">
+            <!-- 单条记录指示状态图标 -->
+            <i class="icon-chevron-right"></i>
+            <!-- 文字部分 -->
+            <span class="accordion-toggle inh-accordion-title result-accordion-title">
+                <div><%=v.title%></div>
+                <div class="title-detail"><%=v.time%>
+                <span class="lastCaptureTime">
+                <% if (v.lastCaptureTime) {%>
+                    最近抓取时间：<%=v.lastCaptureTime%>
+                <%}%>
+                </span>
+                </div>
+            </span>
+
+            <!-- 工具按钮-->
+            <div class="icon-bar">
+                <a href="javascript:void(0)" onclick="event.stopPropagation()" class="icon-trash" title="删除" data-original-title="删除"></a>
+                <a href="<%=v.postUrl%>" onclick="event.stopPropagation()" target="_blank" class="icon-share" title="访问原帖" data-original-title="访问原帖"></a>
+                <a href="javascript:void(0)" <% if (!v.lastCaptureTime) {%>style="display:none;"<%}%> onclick="event.stopPropagation()" class="icon-refresh" value="$!buildResult.buildId" title="刷新" data-original-title="刷新"></a>
+            </div>
+        </div>
+
+        <div id="post<%=i%>" class="accordion-body collapse" postKey="<%=v.key%>" url="<%=v.postUrl%>">
+            <div class="accordion-inner inh-accordion-inner">
+                <pre></pre>
+            </div>
+        </div>
+      </div>
+      <% }); %>
+
+</script>   
+</html>
+
+
